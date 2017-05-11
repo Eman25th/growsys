@@ -6,8 +6,8 @@
 	"database":"Temps"
 	}],
 "sensors":[{
-	"sensor1":"Unit06",
-	"sensor2":"Unit06Sen2"
+	"sensor1":"Unit07",
+	"sensor2":"Unit07Sen2"
 	}],
 "triggerlimits":[{
 	"sensor1lowlimit":"-20",
@@ -30,8 +30,8 @@
 	"receiveraddress":"cbntempalerts@gmail.com",
 	"username":"cbntempalerts",
 	"password":"c@nnabis",
-	"subjectmessage":"Unit06 logger",
-	"subjectwarning":"Warning from Unit06 logger"
+	"subjectmessage":"Unit07 logger",
+	"subjectwarning":"Warning from Unit07 logger"
 	}],
 "sqlBackupDump":[{
 	"backupDumpEnabled":"y",
@@ -44,6 +44,6 @@
 	}],
 "sensortype":"22",
 "sensoramount":"1",
-"sqlbackuppath":"/home/pi/DHT22-TemperatureLogger/Backups/",
+"sqlbackuppath":"/home/pi/growsys/Backups/",
 "adafruitpath":"/home/pi/Adafruit_Python_DHT/examples/AdafruitDHT.py"
 }
