@@ -73,7 +73,7 @@ def getWeeklyAverageTemp(sensor):
 	delta = (datetime.date.today() - timedelta(days=7)).strftime("%Y-%m-%d 00:00:00")
 
     	try:
-        	sqlCommand = "SELECT AVG(temperature) FROM RoomVeg WHERE dateandtime BETWEEN '%s' AND '%s' AND sensor='%s'" % (delta,date,sensor)
+        	sqlCommand = "SELECT AVG(temperature) FROM RoomE WHERE dateandtime BETWEEN '%s' AND '%s' AND sensor='%s'" % (delta,date,sensor)
 		data = databaseHelper(sqlCommand,"Select")
 		weekAverageTemp = "%.2f" % data
    	except:
@@ -167,12 +167,12 @@ def checkWarningLog(sensor, sensortemp):
 	okToUpdate = False
 	# sql command for selecting last send time for sensor that trigged the warning
 
-	sqlCommand = "select * from Veglog where triggedsensor='%s' and mailsendtime IN (SELECT max(mailsendtime)FROM Veglog where triggedsensor='%s')" % (sensor,sensor)
+	sqlCommand = "select * from Elog where triggedsensor='%s' and mailsendtime IN (SELECT max(mailsendtime)FROM Elog where triggedsensor='%s')" % (sensor,sensor)
 	data = databaseHelper(sqlCommand,"Select")
 
 	# If there weren't any entries in database, then it is assumed that this is fresh database and first entry is needed
 	if data == None:
-	       	sqlCommand = "INSERT INTO Veglog SET mailsendtime='%s', triggedsensor='%s', triggedlimit='%s' ,lasttemperature='%s'" % (currentTimeAsString,sensor,"0.0",sensortemp)
+	       	sqlCommand = "INSERT INTO Elog SET mailsendtime='%s', triggedsensor='%s', triggedlimit='%s' ,lasttemperature='%s'" % (currentTimeAsString,sensor,"0.0",sensortemp)
 		databaseHelper(sqlCommand,"Insert")
 		lastLoggedTime = currentTimeAsString
 		lastTemperature = sensortemp
@@ -309,7 +309,7 @@ def main():
 						msgType = "Info"
 						Message = "Connection check. Weekly average from {0} is {1}".format(sensor1,sensor1weeklyAverage)
 						emailWarning(Message, msgType)
-						sqlCommand = "INSERT INTO Veglog SET mailsendtime='%s', triggedsensor='%s', triggedlimit='%s' ,lasttemperature='%s'" % (currentTime,checkSensor,sensor1lowlimit,sensor1weeklyAverage)
+						sqlCommand = "INSERT INTO Elog SET mailsendtime='%s', triggedsensor='%s', triggedlimit='%s' ,lasttemperature='%s'" % (currentTime,checkSensor,sensor1lowlimit,sensor1weeklyAverage)
 						databaseHelper(sqlCommand,"Insert")
 			except:
 				emailWarning("Couldn't get average temperature to sensor: {0} from current week".format(sensor1),msgType)
@@ -326,7 +326,7 @@ def main():
 							msgType = "Info"	
 							Message = "Connection check. Weekly average from {0} is {1}".format(sensor2,sensor2weeklyAverage)
 							emailWarning(Message, msgType)
-							sqlCommand = "INSERT INTO Veglog SET mailsendtime='%s', triggedsensor='%s', triggedlimit='%s' ,lasttemperature='%s'" % (currentTime,checkSensor,sensor2lowlimit,sensor2weeklyAverage)
+							sqlCommand = "INSERT INTO Elog SET mailsendtime='%s', triggedsensor='%s', triggedlimit='%s' ,lasttemperature='%s'" % (currentTime,checkSensor,sensor2lowlimit,sensor2weeklyAverage)
 							databaseHelper(sqlCommand,"Insert")
 				except:
 					emailWarning( "Couldn't get average temperature to sensor: {0} from current week".format(sensor2),msgType)
@@ -354,7 +354,7 @@ def main():
 				okToUpdate, tempWarning = checkWarningLog(sensor1,sensor1temperature)
 		except: 
 			# if limits were triggered but something caused error, send warning mail to indicate this
-			emailWarning("Failed to check/insert log entry from Veglog. Sensor: {0}".format(sensor1),msgType)	
+			emailWarning("Failed to check/insert log entry from Elog. Sensor: {0}".format(sensor1),msgType)	
 			sys.exit(0)
 
 		if okToUpdate == True:
@@ -365,11 +365,11 @@ def main():
 			try:
 			# Insert line to database to indicate when warning was sent
 				currentTime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-				sqlCommand = "INSERT INTO Veglog SET mailsendtime='%s', triggedsensor='%s', triggedlimit='%s' ,lasttemperature='%s'" % (currentTime,sensor1,sensor1lowlimit,sensor1temperature)
+				sqlCommand = "INSERT INTO Elog SET mailsendtime='%s', triggedsensor='%s', triggedlimit='%s' ,lasttemperature='%s'" % (currentTime,sensor1,sensor1lowlimit,sensor1temperature)
 				databaseHelper(sqlCommand,"Insert")
 			except:
 				# if database insert failed, send warning to indicate that there is some issues with database
-				emailWarning("Failed to insert from {0} to Veglog".format(sensor1),msgType)	
+				emailWarning("Failed to insert from {0} to Elog".format(sensor1),msgType)	
 	
 	# sensor 2 readings and limit check
 	sensor2error = 0
@@ -390,7 +390,7 @@ def main():
 					okToUpdate, tempWarning = checkWarningLog(sensor2,sensor2temperature)	
 
 			except:
-				emailWarning("Failed to check/insert log entry from Veglog. Sensor: {0}".format(sensor2),msgType)	
+				emailWarning("Failed to check/insert log entry from Elog. Sensor: {0}".format(sensor2),msgType)	
 				sys.exit(0)
 
 			if okToUpdate == True:
@@ -398,22 +398,22 @@ def main():
 				emailWarning(warningMessage, msgType)
 				try:
 					# Insert line to database to indicate when warning was sent
-			       		sqlCommand = "INSERT INTO Veglog SET mailsendtime='%s', triggedsensor='%s', triggedlimit='%s' ,lasttemperature='%s'" % (currentTime,sensor2,sensor2lowlimit,sensor2temperature)
+			       		sqlCommand = "INSERT INTO Elog SET mailsendtime='%s', triggedsensor='%s', triggedlimit='%s' ,lasttemperature='%s'" % (currentTime,sensor2,sensor2lowlimit,sensor2temperature)
 					databaseHelper(sqlCommand,"Insert")
 				except:
-					emailWarning("Failed to insert entry from {0} to Veglog".format(sensor1),msgType)	
+					emailWarning("Failed to insert entry from {0} to Elog".format(sensor1),msgType)	
 
 	# insert values to db
 	try:
 		if sensor1error == 0:
-			sqlCommand = "INSERT INTO RoomVeg SET dateandtime='%s', sensor='%s', temperature='%s', humidity='%s'" % (currentTime,sensor1,sensor1temperature,sensor1humidity)
+			sqlCommand = "INSERT INTO RoomE SET dateandtime='%s', sensor='%s', temperature='%s', humidity='%s'" % (currentTime,sensor1,sensor1temperature,sensor1humidity)
 			# This row below sets temperature as fahrenheit instead of celsius. Comment above line and uncomment one below to take changes into use
-			sqlCommand = "INSERT INTO RoomVeg SET dateandtime='%s', sensor='%s', temperature='%s', humidity='%s'" % (currentTime,sensor1,(sensor1temperature*(9.0/5.0)+32),sensor1humidity)
+			sqlCommand = "INSERT INTO RoomE SET dateandtime='%s', sensor='%s', temperature='%s', humidity='%s'" % (currentTime,sensor1,(sensor1temperature*(9.0/5.0)+32),sensor1humidity)
 			databaseHelper(sqlCommand,"Insert")
 		if sensorsToRead != "1" and sensor2error == 0:
-			sqlCommand = "INSERT INTO RoomVeg SET dateandtime='%s', sensor='%s', temperature='%s', humidity='%s'" % (currentTime,sensor2,sensor2temperature,sensor2humidity)		
+			sqlCommand = "INSERT INTO RoomE SET dateandtime='%s', sensor='%s', temperature='%s', humidity='%s'" % (currentTime,sensor2,sensor2temperature,sensor2humidity)		
 			# This row below sets temperature as fahrenheit instead of celsius. Comment above line and uncomment one below to take changes into use
-			sqlCommand = "INSERT INTO RoomVeg SET dateandtime='%s', sensor='%s', temperature='%s', humidity='%s'" % (currentTime,sensor2,(sensor2temperature*(9.0/5.0)+32),sensor2humidity)
+			sqlCommand = "INSERT INTO RoomE SET dateandtime='%s', sensor='%s', temperature='%s', humidity='%s'" % (currentTime,sensor2,(sensor2temperature*(9.0/5.0)+32),sensor2humidity)
 			databaseHelper(sqlCommand,"Insert")
    	except:
 		sys.exit(0)
