@@ -6,8 +6,8 @@
 	"database":"Temps"
 	}],
 "sensors":[{
-	"sensor1":"Unit07",
-	"sensor2":"Unit07Sen2"
+	"sensor1":"Unit05",
+	"sensor2":"Unit05Sen2"
 	}],
 "triggerlimits":[{
 	"sensor1lowlimit":"-20",
@@ -30,8 +30,8 @@
 	"receiveraddress":"cbntempalerts@gmail.com",
 	"username":"cbntempalerts",
 	"password":"c@nnabis",
-	"subjectmessage":"Unit07 logger",
-	"subjectwarning":"Warning from Unit07 logger"
+	"subjectmessage":"Unit05 logger",
+	"subjectwarning":"Warning from Unit05 logger"
 	}],
 "sqlBackupDump":[{
 	"backupDumpEnabled":"y",
