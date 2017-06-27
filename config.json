@@ -1,13 +1,13 @@
 {
 "mysql":[{
-	"host":"192.168.1.101",
+	"host":"192.168.14.101",
 	"user":"logger",
 	"password":"Cin256",
 	"database":"Temps"
 	}],
 "sensors":[{
-	"sensor1":"Unit06",
-	"sensor2":"Unit06Sen2"
+	"sensor1":"Unit11",
+	"sensor2":"Unit11Sen2"
 	}],
 "triggerlimits":[{
 	"sensor1lowlimit":"50",
@@ -30,8 +30,8 @@
 	"receiveraddress":"cbntempalerts@gmail.com",
 	"username":"cbntempalerts",
 	"password":"c@nnabis",
-	"subjectmessage":"Unit06 logger",
-	"subjectwarning":"Warning from Room B"
+	"subjectmessage":"Unit11 logger",
+	"subjectwarning":"Warning from Room H"
 	}],
 "sqlBackupDump":[{
 	"backupDumpEnabled":"y",
