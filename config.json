@@ -6,8 +6,8 @@
 	"database":"Temps"
 	}],
 "sensors":[{
-	"sensor1":"Unit11",
-	"sensor2":"Unit11Sen2"
+	"sensor1":"Unit04",
+	"sensor2":"Unit04Sen2"
 	}],
 "triggerlimits":[{
 	"sensor1lowlimit":"50",
@@ -17,7 +17,7 @@
 	}],
 "humiditytriggers":[{
 	"sensor1_humidity_low_limit":"40",
-	"sensor1_humidity_high_limit":"76",
+	"sensor1_humidity_high_limit":"70",
 	"sensor2_humidity_low_limit":"40",
 	"sensor2_humidity_high_limit":"60"
 	}],
@@ -30,8 +30,8 @@
 	"receiveraddress":"cbntempalerts@gmail.com",
 	"username":"cbntempalerts",
 	"password":"c@nnabis",
-	"subjectmessage":"Unit11 logger",
-	"subjectwarning":"Warning from Room H"
+	"subjectmessage":"Unit04 logger",
+	"subjectwarning":"Warning from Veg Room"
 	}],
 "sqlBackupDump":[{
 	"backupDumpEnabled":"y",
