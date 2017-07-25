@@ -6,8 +6,8 @@
 	"database":"Temps"
 	}],
 "sensors":[{
-	"sensor1":"Unit04",
-	"sensor2":"Unit04Sen2"
+	"sensor1":"Unit10",
+	"sensor2":"Unit10Sen2"
 	}],
 "triggerlimits":[{
 	"sensor1lowlimit":"50",
@@ -30,8 +30,8 @@
 	"receiveraddress":"cbntempalerts@gmail.com",
 	"username":"cbntempalerts",
 	"password":"c@nnabis",
-	"subjectmessage":"Unit04 logger",
-	"subjectwarning":"Warning from Veg Room"
+	"subjectmessage":"Unit10 room G logger",
+	"subjectwarning":"Warning from Room G"
 	}],
 "sqlBackupDump":[{
 	"backupDumpEnabled":"y",
